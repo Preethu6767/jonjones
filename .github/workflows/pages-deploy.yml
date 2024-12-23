@@ -1,0 +1,26 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main  # Deploy when changes are pushed to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm run build  # Build static files
+
+      - name: Deploy to GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./build
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v2
